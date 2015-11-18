@@ -13,9 +13,9 @@ RCT_EXPORT_METHOD(play:(NSString *)fileName)
     NSURL *soundURL = [[NSBundle mainBundle] URLForResource:[[fileName lastPathComponent] stringByDeletingPathExtension]
                                              withExtension:[fileName pathExtension]];
 
-    if (self.audioplayer.playing) {
-      self.player = [[AVAudioPlayer alloc] initWithContentsOfURL:soundURL error:nil];
-      [self.player play];
+    if (self.audioPlayer.playing) {
+      self.Player = [[AVAudioPlayer alloc] initWithContentsOfURL:soundURL error:nil];
+      [self.Player play];
     } else {
       self.audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:soundURL error:nil];
       [self.audioPlayer play];
