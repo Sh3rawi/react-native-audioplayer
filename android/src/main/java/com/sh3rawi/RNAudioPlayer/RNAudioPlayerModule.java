@@ -26,17 +26,21 @@ public class RNAudioPlayerModule extends ReactContextBaseJavaModule {
 
   @ReactMethod
   public void play(String audio) {
-    String fname = audio.toLowerCase();
-    int resID = this.reactContext.getResources().getIdentifier(fname, "raw", this.reactContext.getPackageName());
-    mp = MediaPlayer.create(this.reactContext, resID);
-    mp.start();
-    mp.setOnCompletionListener(new OnCompletionListener() {
-      @Override
-      public void onCompletion(MediaPlayer mp) {
-        mp.reset();
-        mp.release();
-        mp = null;
+      AudioManager am = (AudioManager)getSystemService(this.reactContext.AUDIO_SERVICE);
+      if (am.getRingerMode() === AudioManager.RINGER_MODE_NORMAL) {
+
+          String fname = audio.toLowerCase();
+          int resID = this.reactContext.getResources().getIdentifier(fname, "raw", this.reactContext.getPackageName());
+          mp = MediaPlayer.create(this.reactContext, resID);
+          mp.start();
+          mp.setOnCompletionListener(new OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+              mp.reset();
+              mp.release();
+              mp = null;
+            }
+          });
       }
-    });
   }
 }
