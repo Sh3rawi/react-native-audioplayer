@@ -9,6 +9,7 @@ import com.facebook.react.bridge.Callback;
 
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
+import android.media.AudioManager;
 
 public class RNAudioPlayerModule extends ReactContextBaseJavaModule {
   ReactApplicationContext reactContext;
