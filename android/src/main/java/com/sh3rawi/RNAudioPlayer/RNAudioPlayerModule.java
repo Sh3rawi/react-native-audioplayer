@@ -7,6 +7,7 @@ import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.Callback;
 
+import android.content.Context;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.media.AudioManager;
@@ -27,7 +28,7 @@ public class RNAudioPlayerModule extends ReactContextBaseJavaModule {
 
   @ReactMethod
   public void play(String audio) {
-      AudioManager am = (AudioManager)getSystemService(this.reactContext.AUDIO_SERVICE);
+      AudioManager am = (AudioManager) this.reactContext.getSystemService(Context.AUDIO_SERVICE);
       if (am.getRingerMode() == AudioManager.RINGER_MODE_NORMAL) {
 
           String fname = audio.toLowerCase();
