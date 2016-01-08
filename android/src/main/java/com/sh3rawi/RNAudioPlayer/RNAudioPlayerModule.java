@@ -27,7 +27,7 @@ public class RNAudioPlayerModule extends ReactContextBaseJavaModule {
   @ReactMethod
   public void play(String audio) {
       AudioManager am = (AudioManager)getSystemService(this.reactContext.AUDIO_SERVICE);
-      if (am.getRingerMode() === AudioManager.RINGER_MODE_NORMAL) {
+      if (am.getRingerMode() == AudioManager.RINGER_MODE_NORMAL) {
 
           String fname = audio.toLowerCase();
           int resID = this.reactContext.getResources().getIdentifier(fname, "raw", this.reactContext.getPackageName());
