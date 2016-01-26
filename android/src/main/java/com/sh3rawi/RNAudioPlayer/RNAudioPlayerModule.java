@@ -7,8 +7,6 @@ import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.Callback;
 
-import android.content.res.Resources.NotFoundException;
-
 import android.content.Context;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
@@ -33,22 +31,19 @@ public class RNAudioPlayerModule extends ReactContextBaseJavaModule {
       AudioManager am = (AudioManager) this.reactContext.getSystemService(Context.AUDIO_SERVICE);
       if (am.getRingerMode() == AudioManager.RINGER_MODE_NORMAL) {
 
-          try {
-              String fname = audio.toLowerCase();
-              int resID = this.reactContext.getResources().getIdentifier(fname, "raw", this.reactContext.getPackageName());
-              mp = MediaPlayer.create(this.reactContext, resID);
-              mp.start();
-              mp.setOnCompletionListener(new OnCompletionListener() {
-                @Override
-                public void onCompletion(MediaPlayer mp) {
-                  mp.reset();
-                  mp.release();
-                  mp = null;
-                }
-              });
-          } catch (NotFoundException e) {
-              e.printStackTrace();
-          }
+          String fname = audio.toLowerCase();
+          int resID = this.reactContext.getResources().getIdentifier(fname, "raw", this.reactContext.getPackageName());
+          if (resID == 0) { return; }
+          mp = MediaPlayer.create(this.reactContext, resID);
+          mp.start();
+          mp.setOnCompletionListener(new OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+              mp.reset();
+              mp.release();
+              mp = null;
+            }
+          });
       }
   }
 }
