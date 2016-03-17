@@ -10,17 +10,23 @@ RCT_EXPORT_METHOD(play:(NSString *)fileName)
     [session setCategory: AVAudioSessionCategoryAmbient error: nil];
     [session setActive: YES error: nil];
 
-    NSURL *soundURL = [[NSBundle mainBundle] URLForResource:[[fileName lastPathComponent] stringByDeletingPathExtension]
-                                             withExtension:[fileName pathExtension]];
+    @try {
+      NSURL *soundURL = [[NSBundle mainBundle] URLForResource:[[fileName lastPathComponent] stringByDeletingPathExtension]
+                                               withExtension:[fileName pathExtension]];
 
-    if (soundURL) {
-      if (self.audioPlayer.playing) {
-        self.anotherPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:soundURL error:nil];
-        [self.anotherPlayer play];
-      } else {
-        self.audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:soundURL error:nil];
-        [self.audioPlayer play];
+      if (soundURL) {
+        if (self.audioPlayer.playing) {
+          self.anotherPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:soundURL error:nil];
+          [self.anotherPlayer play];
+        } else {
+          self.audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:soundURL error:nil];
+          [self.audioPlayer play];
+        }
       }
+    }
+    @catch (NSException * e) {
+    }
+    @finally {
     }
 }
 
